@@ -7,6 +7,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
+import br.com.model.Cliente;
 import br.com.model.Produto;
 
 public class DAO<E> {
@@ -60,6 +61,25 @@ public class DAO<E> {
 		String jpql = "select e from " + classe.getName() + " e";
 		TypedQuery<E> query = em.createQuery(jpql,classe);
 		return query.getResultList();
+	}
+	
+	public Produto obterProduto(int codigo) {
+		return em.find(Produto.class, codigo);
+	}
+	
+	
+	public Cliente obterCliente(int codigo) {
+		return em.find(Cliente.class, codigo);
+	}
+	
+	public DAO<E> deletarProduto(Produto prod) {
+		em.remove(prod);
+		return this;
+	}
+	
+	public DAO<E> deletarCliente(Cliente cli) {
+		em.remove(cli);
+		return this;
 	}
 	
 	public DAO<E> excluirRegistro(E entidade) {
